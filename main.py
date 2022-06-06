@@ -26,7 +26,7 @@ color_alive_next = (93, 50, 43)
 def update(screen, cells, size, with_progress=False):
     # empty numpy array creates the shape of the already existing cells and creates an empy array and within this
     # updated array apply changes
-    updated_cells = numpy.empty((cells.shape[0], cells.shape[1]))
+    updated_cells = numpy.zeros((cells.shape[0], cells.shape[1]))
     # This takes each cell and lets me iterate over each cell by row and column going throuhg each and ecery one
     for row, col in numpy.ndindex(cells.shape):
         # Apply game rules here: calculate number of alive neighbouring cells, check all cells surrounding current
