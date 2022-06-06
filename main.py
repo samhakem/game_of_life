@@ -20,6 +20,7 @@ color_grid = (249, 237, 187)
 color_die_next = (185, 157, 136)
 color_alive_next = (93, 50, 43)
 
+
 # Update will contain game logic and drawing process
 # with_progress=False allows me to update the screen without moving to the next generation, if true executes the next
 # generation
@@ -32,7 +33,7 @@ def update(screen, cells, size, with_progress=False):
         # Apply game rules here: calculate number of alive neighbouring cells, check all cells surrounding current
         # alive cell if any others are alive
         # Calculate from top left cell to bottom right cell any 1 cells, sdubstract the 1 cell that is alive
-        alive = numpy.sum(cells[row-1:row+2, col-1:col+2]) - cells[row, col]
+        alive = numpy.sum(cells[row - 1:row + 2, col - 1:col + 2]) - cells[row, col]
         # Sets cells to background color if not alive = 0 else sets to alive next color
         color = color_bg if cells[row, col] == 0 else color_alive_next
 
@@ -41,7 +42,7 @@ def update(screen, cells, size, with_progress=False):
             # Any live cell with more than three live neighbours dies, as if by overpopulation.
             if alive < 2 or alive > 3:
                 if with_progress:
-                    color - color_die_next
+                    color = color_die_next
             # Any live cell with two or three live neighbours lives on to the next generation.
             elif 2 <= alive <= 3:
                 updated_cells[row, col] = 1
@@ -55,6 +56,7 @@ def update(screen, cells, size, with_progress=False):
         pygame.draw.rect(screen, color, (col * size, row * size, size - 1, size - 1))
 
     return updated_cells
+
 
 # Main functionality
 def main():
@@ -70,12 +72,11 @@ def main():
     pygame.display.update()
 
     # Game loop
-    running =  False
+    running = False
 
     while True:
         for event in pygame.event.get():
-            if event.typ == pygame.quit():
-                pygame.quit()
+            if event.type == pygame.QUIT:
                 return
             elif event.type == pygame.KEYDOWN:
                 # Toggle running with spacebar
@@ -85,7 +86,7 @@ def main():
                     pygame.display.update()
             if pygame.mouse.get_pressed()[0]:
                 pos = pygame.mouse.get_pos()
-                cells[pos[1] // 10, pos[0]  // 10] = 1
+                cells[pos[1] // 10, pos[0] // 10] = 1
                 pygame.display.update()
 
             screen.fill(color_grid)
@@ -95,6 +96,7 @@ def main():
                 pygame.display.update()
 
             time.sleep(0.001)
+
 
 if __name__ == '__main__':
     main()
