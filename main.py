@@ -50,8 +50,51 @@ def update(screen, cells, size, with_progress=False):
         else:
             if alive == 3:
                 updated_cells[row, col] = 1
-                color = color_alive_next
+                if with_progress:
+                    color = color_alive_next
         pygame.draw.rect(screen, color, (col * size, row * size, size - 1, size - 1))
-        return updated_cells
+
+    return updated_cells
 
 # Main functionality
+def main():
+    # Initialise pygame
+    pygame.init()
+    # Create a screen
+    screen = pygame.display.set_mode((800, 600))
+    cells = numpy.zeros((60, 80))
+    # Fills screen with grid color unless a cell is dead in which case it applies the background color to that cell
+    screen.fill((color_grid))
+    update(screen, cells, 10)
+    pygame.display.flip()
+    pygame.display.update()
+
+    # Game loop
+    running =  False
+
+    while True:
+        for event in pygame.event.get():
+            if event.typ == pygame.quit():
+                pygame.quit()
+                return
+            elif event.type == pygame.KEYDOWN:
+                # Toggle running with spacebar
+                if event.key == pygame.K_SPACE:
+                    running = not running
+                    update(screen, cells, 10)
+                    pygame.display.update()
+            if pygame.mouse.get_pressed()[0]:
+                pos = pygame.mouse.get_pos()
+                cells[pos[1] // 10, pos[0]  // 10] = 1
+                pygame.display.update()
+
+            screen.fill(color_grid)
+
+            if running:
+                cells = update(screen, cells, 10, with_progress=True)
+                pygame.display.update()
+
+            time.sleep(0.001)
+
+if __name__ == '__main__':
+    main()
