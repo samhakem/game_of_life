@@ -63,8 +63,8 @@ def main():
     # Initialise pygame
     pygame.init()
     # Create a screen
-    screen = pygame.display.set_mode((800, 600))
-    cells = numpy.zeros((60, 80))
+    screen = pygame.display.set_mode((1920, 1080))
+    cells = numpy.zeros((108, 192))
     # Fills screen with grid color unless a cell is dead in which case it applies the background color to that cell
     screen.fill((color_grid))
     update(screen, cells, 10)
@@ -88,8 +88,7 @@ def main():
                 pos = pygame.mouse.get_pos()
                 cells[pos[1] // 10, pos[0] // 10] = 1
                 pygame.display.update()
-
-            screen.fill(color_grid)
+                screen.fill(color_grid)
 
             if running:
                 cells = update(screen, cells, 10, with_progress=True)
